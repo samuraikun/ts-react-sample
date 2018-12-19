@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { Header, About } from './components';
+import { Header } from './components';
 
 export const App: React.FunctionComponent<{}> = props => {
   return (
     <div className="container-fluid">
       <Header />
+      {props.children}
     </div>
   );
 }
