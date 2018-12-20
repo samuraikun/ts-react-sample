@@ -53,7 +53,14 @@ const insertMember = (member: MemberEntity) => {
   console.table(mockMembers);
 };
 
+const fetchMemberById = (id: number): Promise<MemberEntity> => {
+  const member = mockMembers.find(m => m.id === id);
+
+  return Promise.resolve(member);
+}
+
 export const memberAPI = {
   fetchMembers,
+  fetchMemberById,
   saveMember,
 };

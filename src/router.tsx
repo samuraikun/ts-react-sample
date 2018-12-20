@@ -13,6 +13,7 @@ export const AppRouter: React.FunctionComponent<{}> = () => {
           <Route path='/about' component={About} />
           <Route path='/members' component={MembersPage} />
           <Route path='/member' component={MemberPageContainer} />
+          <Route path="/member/:id" component={MemberPageContainer} />
         </Switch>
       </div>
     </HashRouter>
