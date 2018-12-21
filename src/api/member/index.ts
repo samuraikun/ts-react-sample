@@ -75,6 +75,12 @@ const fetchMemberById = async (id: number): Promise<MemberEntity> => {
   return mapToMember(member);
 }
 
+const fetchMockMemberById = (id: number): Promise<MemberEntity> => {
+  const member = mockMembers.find(m => m.id === id);
+
+  return Promise.resolve(member);
+}
+
 const fetchRepositories = async (): Promise<RepositoryEntity[]> => {
   const repositoryURL = `${repoURL}`;
   const res = await fetch(repositoryURL);
@@ -86,6 +92,7 @@ const fetchRepositories = async (): Promise<RepositoryEntity[]> => {
 export const memberAPI = {
   fetchMembers,
   fetchMemberById,
+  fetchMockMemberById,
   saveMember,
   fetchRepositories,
 };
