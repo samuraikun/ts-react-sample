@@ -1,7 +1,9 @@
-import { MemberEntity } from '../../model';
+import { MemberEntity, RepositoryEntity } from '../../model';
 import { members } from './mockData';
 
 const baseURL = 'https://api.github.com/orgs/lemoncode';
+const userURL = 'https://api.github.com/user';
+const repoURL = 'https://api.github.com/orgs/lemoncode/repos';
 let mockMembers = members;
 
 const fetchMembers = async (): Promise<MemberEntity[]> => {
@@ -22,6 +24,18 @@ const mapToMember = (githubMember: MemberEntity) => {
     login: githubMember.login,
     avatar_url: githubMember.avatar_url
   };
+};
+
+const mapToRepositories = (githubRepositories: any[]): RepositoryEntity[] => {
+  return githubRepositories.map(mapToRepository);
+};
+
+const mapToRepository = (githubRepository: any):RepositoryEntity => {
+  return{
+    id: githubRepository.id,
+    name: githubRepository.name,
+    description: githubRepository.description
+  }
 };
 
 const saveMember = (member: MemberEntity): Promise<boolean> => {
@@ -53,14 +67,24 @@ const insertMember = (member: MemberEntity) => {
   console.table(mockMembers);
 };
 
-const fetchMemberById = (id: number): Promise<MemberEntity> => {
-  const member = mockMembers.find(m => m.id === id);
+const fetchMemberById = async (id: number): Promise<MemberEntity> => {
+  const membersURL = `${userURL}/${id}`;
+  const res = await fetch(membersURL);
+  const member = await res.json();
 
-  return Promise.resolve(member);
+  return mapToMember(member);
+}
+
+const fetchRepositories = async (): Promise<RepositoryEntity[]> => {
+  const res = await fetch(repoURL);
+  const repositories = await res.json();
+
+  return mapToRepositories(repositories);
 }
 
 export const memberAPI = {
   fetchMembers,
   fetchMemberById,
   saveMember,
+  fetchRepositories,
 };
