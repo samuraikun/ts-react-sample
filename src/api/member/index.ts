@@ -76,7 +76,8 @@ const fetchMemberById = async (id: number): Promise<MemberEntity> => {
 }
 
 const fetchRepositories = async (): Promise<RepositoryEntity[]> => {
-  const res = await fetch(repoURL);
+  const repositoryURL = `${repoURL}`;
+  const res = await fetch(repositoryURL);
   const repositories = await res.json();
 
   return mapToRepositories(repositories);
